@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  app:
+    ipc: host
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - $HOME/.aws/credentials:/home/vscode/.aws/credentials:ro
+      - $HOME/.aws/config:/home/vscode/.aws/config:ro
+      - $HOME/.gitconfig:/home/vscode/.gitconfig
+##  db:
+##    image: postgres:13.6-bullseye
+##    restart: always
+##    environment:
+##      POSTGRES_USER: launchscience_user
+##      POSTGRES_PASSWORD: local_password
+##      POSTGRES_DB: launchscience_db
+##    ports:
+##      - "5432:5432"
+##  redis:
+##    image: redis:7.0.8
+##    ports:
+##      - "6379:6379"
+##

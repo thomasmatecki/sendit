@@ -1,0 +1,56 @@
+{
+  "name": "dev",
+  "dockerComposeFile": "docker-compose.dev.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "remoteEnv": {
+    "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": ".devcontainer/postCreateCommand.sh",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "tailwindcss.jsxPropImportChecking": false,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "i18n-ally.enabledFrameworks": [
+          "i18next",
+          "react"
+        ],
+        "i18n-ally.localesPaths": [
+          "frontend/src/translations"
+        ],
+        "i18n-ally.keystyle": "flat",
+        "i18n-ally.sortKeys": true,
+        "i18n-ally.keepFulfilled": true
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "lightyen.tailwindcss-intellisense-twin",
+        "lokalise.i18n-ally"
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {},
+    "ghcr.io/devcontainers/features/aws-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.10"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18.17.1",
+      "nodeGypDependencies": false
+    },
+    "terraform": {
+      "version": "latest",
+      "tflint": "latest",
+      "terragrunt": "latest"
+    }
+  }
+}

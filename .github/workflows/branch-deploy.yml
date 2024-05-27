@@ -27,6 +27,12 @@ jobs:
       - name: branch-deploy
         id: branch-deploy
         uses: github/branch-deploy@v7.4.0
+          with:
+            trigger: ".deploy"
+            noop_trigger: ".noop"
+            reaction: "eyes"
+            environment: "production"
+            stable_branch: "main"
       #        with:
       #          admins: the-hideout/core-contributors
       #          admins_pat: ${{ secrets.BRANCH_DEPLOY_ADMINS_PAT }}

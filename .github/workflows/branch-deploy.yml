@@ -28,7 +28,7 @@ jobs:
           noop_trigger: ".noop"
           #          reaction: "eyes"
           environment: "development"
-          environment_urls: "development|https://pr-${{ github.event.number }}.matecki.website"
+          environment_urls: "development|https://pr-${{ github.event.issue.number }}.matecki.website"
           stable_branch: "main"
       - uses: actions/checkout@v4
         with:

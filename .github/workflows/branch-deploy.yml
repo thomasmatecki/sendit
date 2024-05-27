@@ -1,6 +1,15 @@
 name: branch-deploy
 
-on: issue_comment
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  pull-requests: write
+  deployments: write
+  contents: write
+  checks: read
+  statuses: read
 
 jobs:
   pr_commented:
@@ -18,6 +27,6 @@ jobs:
         with:
           trigger: ".deploy"
           noop_trigger: ".noop"
-          reaction: "eyes"
+          #          reaction: "eyes"
           environment: "production"
           stable_branch: "main"

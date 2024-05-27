@@ -19,6 +19,6 @@ jobs:
         with:
           trigger: ".deploy"
           noop_trigger: ".noop"
-          reaction: "eyes"
+          #          reaction: "eyes"
           environment: "production"
           stable_branch: "main"

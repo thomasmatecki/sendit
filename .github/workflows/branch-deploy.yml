@@ -3,7 +3,6 @@ name: branch-deploy
 on:
   issue_comment:
     types: [created]
-
 permissions:
   pull-requests: write
   deployments: write
@@ -17,16 +16,14 @@ jobs:
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          echo A comment on PR $NUMBER
-        env:
-          NUMBER: ${{ github.event.issue.number }}
-      - name: branch-deploy
-        id: branch-deploy
-        uses: github/branch-deploy@v9.1.3
+      - uses: github/branch-deploy@v9.1.3
         with:
           trigger: ".deploy"
           noop_trigger: ".noop"
           #          reaction: "eyes"
-          environment: "production"
+          environment: "development"
+          environment_urls: "development|https://pr-${{ github.event.number }}.matecki.website"
           stable_branch: "main"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.branch-deploy.outputs.ref }}

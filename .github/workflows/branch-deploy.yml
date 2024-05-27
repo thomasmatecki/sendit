@@ -14,7 +14,7 @@ jobs:
           NUMBER: ${{ github.event.issue.number }}
       - name: branch-deploy
         id: branch-deploy
-        uses: github/branch-deploy@vX.X.X
+        uses: github/branch-deploy@v9.1.3
         with:
           trigger: ".deploy"
           noop_trigger: ".noop"

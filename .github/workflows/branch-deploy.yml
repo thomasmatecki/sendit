@@ -1,4 +1,4 @@
-t stname: branch-deploy
+name: branch-deploy
 
 on:
   issue_comment:
@@ -38,57 +38,57 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ steps.branch-deploy.outputs.ref }}
-
-      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # pin@v2.0.3
-        if: steps.branch-deploy.outputs.continue == 'true'
-        with:
-          terraform_version: 1.1.7
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-
-      - name: Terraform init
-        if: steps.branch-deploy.outputs.continue == 'true'
-        run: terraform init
-
-      - name: Terraform plan
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' }}
-        env:
-          TF_VAR_CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-        id: plan
-        run: terraform plan -no-color
-        continue-on-error: true
-
-      - name: Terraform apply
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
-        env:
-          TF_VAR_CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
-        id: apply
-        run: terraform apply -no-color -auto-approve
-        continue-on-error: true
-
-      - name: Terraform plan output
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' }}
-        env:
-          TF_STDOUT: ${{ steps.plan.outputs.stdout }}
-        run: |
-          TF_OUTPUT="\`\`\`terraform\n${TF_STDOUT}\n\`\`\`"
-          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
-          echo "$TF_OUTPUT" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
-      - name: Terraform apply output
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
-        env:
-          TF_STDOUT: ${{ steps.apply.outputs.stdout }}
-        run: |
-          TF_OUTPUT="\`\`\`terraform\n${TF_STDOUT}\n\`\`\`"
-          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
-          echo "$TF_OUTPUT" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
-      - name: Check Terraform plan output
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' && steps.plan.outcome == 'failure' }}
-        run: exit 1
-
-      - name: Check Terraform apply output
-        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' && steps.apply.outcome == 'failure' }}
-        run: exit 1
+#      - uses: hashicorp/setup-terraform@633666f66e0061ca3b725c73b2ec20cd13a8fdd1 # pin@v2.0.3
+#        if: steps.branch-deploy.outputs.continue == 'true'
+#        with:
+#          terraform_version: 1.1.7
+#          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+#
+#      - name: Terraform init
+#        if: steps.branch-deploy.outputs.continue == 'true'
+#        run: terraform init
+#
+#      - name: Terraform plan
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' }}
+#        env:
+#          TF_VAR_CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+#        id: plan
+#        run: terraform plan -no-color
+#        continue-on-error: true
+#
+#      - name: Terraform apply
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
+#        env:
+#          TF_VAR_CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+#        id: apply
+#        run: terraform apply -no-color -auto-approve
+#        continue-on-error: true
+#
+#      - name: Terraform plan output
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' }}
+#        env:
+#          TF_STDOUT: ${{ steps.plan.outputs.stdout }}
+#        run: |
+#          TF_OUTPUT="\`\`\`terraform\n${TF_STDOUT}\n\`\`\`"
+#          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+#          echo "$TF_OUTPUT" >> $GITHUB_ENV
+#          echo 'EOF' >> $GITHUB_ENV
+#
+#      - name: Terraform apply output
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' }}
+#        env:
+#          TF_STDOUT: ${{ steps.apply.outputs.stdout }}
+#        run: |
+#          TF_OUTPUT="\`\`\`terraform\n${TF_STDOUT}\n\`\`\`"
+#          echo 'DEPLOY_MESSAGE<<EOF' >> $GITHUB_ENV
+#          echo "$TF_OUTPUT" >> $GITHUB_ENV
+#          echo 'EOF' >> $GITHUB_ENV
+#
+#      - name: Check Terraform plan output
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop == 'true' && steps.plan.outcome == 'failure' }}
+#        run: exit 1
+#
+#      - name: Check Terraform apply output
+#        if: ${{ steps.branch-deploy.outputs.continue == 'true' && steps.branch-deploy.outputs.noop != 'true' && steps.apply.outcome == 'failure' }}
+#        run: exit 1
+#

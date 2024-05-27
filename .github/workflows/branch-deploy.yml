@@ -13,14 +13,12 @@ jobs:
           echo A comment on PR $NUMBER
         env:
           NUMBER: ${{ github.event.issue.number }}
-
-  issue_commented:
-    # This job only runs for issue comments
-    name: Issue comment
-    if: ${{ !github.event.issue.pull_request }}
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo A comment on issue $NUMBER
-        env:
-          NUMBER: ${{ github.event.issue.number }}
+      - name: branch-deploy
+        id: branch-deploy
+        uses: github/branch-deploy@v9.1.3
+        with:
+          trigger: ".deploy"
+          noop_trigger: ".noop"
+          reaction: "eyes"
+          environment: "production"
+          stable_branch: "main"
